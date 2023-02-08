@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   persons: string[] = ['Max', 'Manual', 'Anna'];
+
+  /**
+   * onPersonCreated() is used to update the new user created in persons[]
+   */
+  public onPersonCreated(newPersons: string) {
+    if (newPersons !== '') {
+      this.persons.push(newPersons);
+    }
+  }
 }
