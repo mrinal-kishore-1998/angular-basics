@@ -16,4 +16,11 @@ export class PersonsComponent implements OnInit {
   ngOnInit(): void {
     this.personList = this.personService.persons;
   }
+
+  /**
+   * onRemovePerson(person) is used to get the repective person that is going to be removed
+   */
+  public onRemovePerson(person: string) {
+    this.personService.removePerson(person);
+  }
 }
