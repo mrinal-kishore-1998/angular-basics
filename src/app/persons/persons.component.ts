@@ -15,6 +15,9 @@ export class PersonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.personList = this.personService.persons;
+    this.personService.personsChanged.subscribe((persons) => {
+      this.personList = persons;
+    });
   }
 
   /**
