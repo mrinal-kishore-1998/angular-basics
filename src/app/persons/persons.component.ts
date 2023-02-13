@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PersonsService } from './persons.service';
 
 @Component({
@@ -6,8 +7,9 @@ import { PersonsService } from './persons.service';
   templateUrl: './persons.component.html',
   styleUrls: ['./persons.component.css'],
 })
-export class PersonsComponent implements OnInit {
+export class PersonsComponent implements OnInit, OnDestroy {
   personList: string[];
+  private personListSubs: Subscription;
 
   constructor(private personService: PersonsService) {
     // this.personList = personService.persons;
@@ -15,9 +17,11 @@ export class PersonsComponent implements OnInit {
 
   ngOnInit(): void {
     this.personList = this.personService.persons;
-    this.personService.personsChanged.subscribe((persons) => {
-      this.personList = persons;
-    });
+    this.personListSubs = this.personService.personsChanged.subscribe(
+      (persons) => {
+        this.personList = persons;
+      }
+    );
   }
 
   /**
@@ -25,5 +29,9 @@ export class PersonsComponent implements OnInit {
    */
   public onRemovePerson(person: string) {
     this.personService.removePerson(person);
+  }
+
+  ngOnDestroy(): void {
+    this.personListSubs.unsubscribe();
   }
 }
