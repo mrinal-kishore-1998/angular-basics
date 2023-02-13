@@ -10,6 +10,7 @@ export class PersonsService {
   public addPerson(name: string) {
     if (name !== '') {
       this.persons.push(name);
+      console.log(name);
     }
   }
 }
