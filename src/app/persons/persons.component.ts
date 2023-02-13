@@ -9,6 +9,7 @@ import { PersonsService } from './persons.service';
 })
 export class PersonsComponent implements OnInit, OnDestroy {
   personList: string[];
+  isFetching = false;
   private personListSubs: Subscription;
 
   constructor(private personService: PersonsService) {}
@@ -18,8 +19,10 @@ export class PersonsComponent implements OnInit, OnDestroy {
     this.personListSubs = this.personService.personsChanged.subscribe(
       (persons) => {
         this.personList = persons;
+        this.isFetching = false;
       }
     );
+    this.isFetching = true;
     this.personService.fetchPersons();
   }
 
